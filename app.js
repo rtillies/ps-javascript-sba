@@ -76,30 +76,35 @@ const LearnerSubmissions = [
   }
 ];
 
+// Main function that does all the work
+// Wasn't sure if we were supposed to keep this declaration as is
 function getLearnerData(course, ag, submissions) {
   let allAssignments = createAssignmentList(course, ag)
   let learnIDlist = createLearnerList(submissions)
   // let allLearners = createLearnerObjectList(submissions)
   const result = createLearnerObjectList(learnIDlist, allAssignments)
 
+  // Iterate through each submission
   submissions.forEach((sub) => {
-    // let learnerID = sub.learner_id
-    // const assignID = sub.assignment_id
-    // const lScore = sub.submission.score
-    // let maxScore, grade, learnerID, assignID;
     let score, grade, learnerID, assignID;
 
+    // Iterate through assignments array of objects
     for (const assign of allAssignments) {
-      // console.log(assign);
-      // console.log(`Assign ID: ${assign.id}`);
+
+      // Find the submission that matches the assignment
       if (assign.id == sub.assignment_id) {
+
+        // Determine if assignment is late
+        // and adjust score accordingly
         const lateSub = sub.submission.submitted_at > assign.due_at
         score = lateSub 
           ? sub.submission.score - assign.points_possible / 10
           : sub.submission.score
 
+        // Calculate individual assignment score
         grade = score / assign.points_possible
 
+        // Find the learner object for this assignment submission
         const foundLearner = result.find((learner) => {
           return learner.id === sub.learner_id
         })  
@@ -108,6 +113,8 @@ function getLearnerData(course, ag, submissions) {
         console.log(foundLearner);
         console.log(`POST: assignID: ${assign.id} learnerID: ${sub.learner_id} Grade: ${grade}`);
 
+        // Attach a "temporary" grade object to the learner
+        // Will be fixed in calcAverage
         let gradeObject = {}
         gradeObject.id = assign.id
         gradeObject.points = score
@@ -115,9 +122,8 @@ function getLearnerData(course, ag, submissions) {
         gradeObject.grade = Number((score / assign.points_possible).toFixed(3))
         foundLearner[assign.id] = gradeObject
   
-        break
+        break // when assign.id == sub.assignment_id
       }
-
     }
   })
   
