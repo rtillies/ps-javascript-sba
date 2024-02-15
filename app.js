@@ -108,7 +108,12 @@ function getLearnerData(course, ag, submissions) {
         console.log("Found learner");
         console.log(foundLearner);
         console.log(`POST: assignID: ${assign.id} learnerID: ${sub.learner_id} Grade: ${grade}`);
-        foundLearner[assign.id] = grade
+
+        let gradeObject = {}
+        gradeObject.id = assign.id
+        gradeObject.points = sub.submission.score
+        gradeObject.max = assign.points_possible
+        foundLearner[assign.id] = gradeObject
   
         break
       }
@@ -118,7 +123,9 @@ function getLearnerData(course, ag, submissions) {
   return result
 }
 
-function calcGrade(learnerObjs, submissions) {
+function calcAverage(learners) {
+  let total = 0
+
 }
 
 function createLearnerObjectList(learners, assignments) {
@@ -170,10 +177,3 @@ const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
 console.log("Final Results");
 console.log(result);
-
-/* Final Results
-[
-  { '1': 0.94, '2': 1, id: 125, avg: 0.985 },
-  { '1': 0.78, '2': 0.833, id: 132, avg: 0.82 }
-]
- */
