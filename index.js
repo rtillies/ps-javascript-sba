@@ -99,7 +99,11 @@ function getLearnerData(course, ag, submissions) {
  */
 
 function getLearnerData(course, ag, submissions) {
+  let assignments = createValidAssignmentList(course, ag)
+  let learners = createLearnerList(submissions)
 
+  console.log(assignments)
+  console.log(learners)
 }
 
 function createLearnerList(ls) {
@@ -129,14 +133,7 @@ function createValidAssignmentList(c, ag) {
 }
 
 // Main program
-const validAssignments = createValidAssignmentList(CourseInfo, AssignmentGroup)
-const learners = createLearnerList(LearnerSubmissions)
-
-console.log(validAssignments)
-console.log(learners)
-
-// Final program
-// const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 // console.log(result);
 
 /* Final Results
