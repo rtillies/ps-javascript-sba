@@ -99,11 +99,34 @@ function getLearnerData(course, ag, submissions) {
  */
 
 function getLearnerData(course, ag, submissions) {
-  let allAssignments = createValidAssignmentList(course, ag)
+  let allAssignments = createAssignmentList(course, ag)
   let allLearners = createLearnerList(submissions)
   const result = createLearnerObjectList(allLearners, allAssignments)
 
+  submissions.forEach((sub) => {
+    // const learnerID = sub.learner_id
+    // const assignID = sub.assignment_id
+    // const lScore = sub.submission.score
+    // let maxScore;
+
+    // for (const assign in allAssignments) {
+    //   if (assign == sub.assignment_id) {
+    //     maxScore = ag.assignments.points_possible
+    //     console.log(`FOUND: assign: ${assign} id: ${sub.assignment_id} max: ${ag.assignments.points_possible}`);
+    //     break
+    //   }
+    // }
+
+    // console.log(`Learner ID: ${sub.learner_id}`);
+    // console.log(`Assign ID:  ${sub.assignment_id}`);
+    // console.log(`Sub Score:  ${sub.submission.score}`);
+    // console.log(`Max Score: ${maxScore}`);
+  })
+
   return result
+}
+
+function calcGrade(learnerObjs, submissions) {
 }
 
 function createLearnerObjectList(learners, assignments) {
@@ -132,7 +155,7 @@ function createLearnerList(ls) {
   return learnerList
 }
 
-function createValidAssignmentList(c, ag) {
+function createAssignmentList(c, ag) {
   const assignList = []
   const today = new Date().toJSON();
 
@@ -141,10 +164,11 @@ function createValidAssignmentList(c, ag) {
   } else {
     ag.assignments.forEach((assign) => {
       if(assign.due_at < today) {
-        assignList.push(assign.id)
+        assignList.push(assign)
       }
     })
   }
+  console.log(assignList);
   return assignList
 }
 
