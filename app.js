@@ -78,14 +78,16 @@ const LearnerSubmissions = [
 
 function getLearnerData(course, ag, submissions) {
   let allAssignments = createAssignmentList(course, ag)
-  let allLearners = createLearnerList(submissions)
-  const result = createLearnerObjectList(allLearners, allAssignments)
+  let learnIDlist = createLearnerList(submissions)
+  // let allLearners = createLearnerObjectList(submissions)
+  const result = createLearnerObjectList(learnIDlist, allAssignments)
 
   submissions.forEach((sub) => {
-    // const learnerID = sub.learner_id
+    // let learnerID = sub.learner_id
     // const assignID = sub.assignment_id
     // const lScore = sub.submission.score
-    let maxScore;
+    // let maxScore, grade, learnerID, assignID;
+    let grade, learnerID, assignID;
 
     for (const assign of allAssignments) {
       // console.log(assign);
@@ -93,16 +95,24 @@ function getLearnerData(course, ag, submissions) {
       if (assign.id == sub.assignment_id) {
         maxScore = assign.points_possible
         grade = sub.submission.score / assign.points_possible
+        learnerID = sub.learner_id
+        assignID = assign.id
         
-        console.log(`FOUND: assignID: ${assign.id} score: ${sub.submission.score} / ${maxScore} Percent: ${grade}`);
+        console.log("All Learners:");
+        console.log(result);
 
+        const foundLearner = result.find((learner) => {
+          return learner.id === learnerID
+        })  
+
+        console.log("Found learner");
+        console.log(foundLearner);
+        console.log(`POST: assignID: ${assignID} learnerID: ${learnerID} Grade: ${grade}`);
+        foundLearner[assignID] = grade
+  
         break
       }
     }
-    // console.log(`Learner ID: ${sub.learner_id}`);
-    // console.log(`Assign ID:  ${sub.assignment_id}`);
-    // console.log(`Sub Score:  ${sub.submission.score}`);
-    // console.log(`Max Score: ${maxScore}`);
   })
 
   return result
@@ -117,10 +127,6 @@ function createLearnerObjectList(learners, assignments) {
   for (let i = 0; i < learners.length; i++) {
     const learner = {}
     learner.id = learners[i]
-    learner.avg = 0
-    for (const assign of assignments) {
-      learner[assign.id] = 0
-    }
     objectList.push(learner)
   }
 
@@ -161,6 +167,8 @@ function createAssignmentList(c, ag) {
 
 // Main program
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+
+console.log("Final Results");
 console.log(result);
 
 /* Final Results
