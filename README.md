@@ -17,8 +17,8 @@ This JavaScript application gathers and processes data for a course (including a
 
 Each object represents an individual learner.
 * `id`: Learner ID
-* `avg`: weighted average for all assignments
-* `1`, `2`, etc.: individual grades per assignment
+* `avg`: weighted average for all assignments, as a decimal (e.g. `0.985 = 98.5%`)
+* `1`, `2`, etc.: individual grades per assignment, as a decimal
 
 ## How to run in Chrome browser
 
