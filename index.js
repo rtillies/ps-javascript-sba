@@ -102,13 +102,14 @@ function getLearnerData(course, ag, submissions) {
 
 }
 
-function processLearnerGrades() {
-  const learners = []
-  const assignments = []
-  LearnerSubmissions.forEach(learner => {
-    console.log(learner.learner_id);
-     
+function createLearnerList(ls) {
+  const learnerList = []
+  ls.forEach(learner => {
+    let id = learner.learner_id
+    if(!learnerList.includes(id))
+      learnerList.push(id)
   })
+  return learnerList
 }
 
 function createValidAssignmentList(c, ag) {
@@ -119,7 +120,7 @@ function createValidAssignmentList(c, ag) {
     console.log("Assignment Group does not belong to Course");
   } else {
     ag.assignments.forEach((assign) => {
-      if(assign.due_at < todaysDate) {
+      if(assign.due_at < today) {
         assignList.push(assign.id)
       }
     })
@@ -127,12 +128,18 @@ function createValidAssignmentList(c, ag) {
   return assignList
 }
 
+// Main program
+const validAssignments = createValidAssignmentList(CourseInfo, AssignmentGroup)
+const learners = createLearnerList(LearnerSubmissions)
 
-console.log(createValidAssignmentList(CourseInfo, AssignmentGroup))
-const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
-console.log(result);
+console.log(validAssignments)
+console.log(learners)
 
-/* 
+// Final program
+// const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+// console.log(result);
+
+/* Final Results
 [
   { '1': 0.94, '2': 1, id: 125, avg: 0.985 },
   { '1': 0.78, '2': 0.833, id: 132, avg: 0.82 }
