@@ -88,7 +88,7 @@ function getLearnerData(course, ag, submissions) {
     let maxScore;
 
     for (const assign in allAssignments) {
-      console.log(`Assign ID: ${assign.id}`);
+      // console.log(`Assign ID: ${assign.id}`);
       if (assign.id == sub.assignment_id) {
         maxScore = ag.assignments.points_possible
         console.log(`FOUND: assignID: ${assign} subID: ${sub.assignment_id} max: ${ag.assignments.points_possible}`);
@@ -110,6 +110,7 @@ function calcGrade(learnerObjs, submissions) {
 
 function createLearnerObjectList(learners, assignments) {
   const objectList = []
+  // console.log(learners);
 
   for (let i = 0; i < learners.length; i++) {
     const learner = {}
@@ -121,6 +122,8 @@ function createLearnerObjectList(learners, assignments) {
     objectList.push(learner)
   }
 
+  console.log("Learner List:");
+  console.log(objectList);
   return objectList
 }
 
@@ -131,9 +134,7 @@ function createLearnerList(ls) {
     if(!learnerList.includes(id))
       learnerList.push(id)
   })
-
-  console.log("Learner List:");
-  console.log(learnerList);
+  return learnerList
 }
 
 function createAssignmentList(c, ag) {
@@ -149,11 +150,11 @@ function createAssignmentList(c, ag) {
       }
     })
   }
+
   console.log("Assignment List:");
   console.log(assignList);
   return assignList
 }
-
 
 
 // Main program
