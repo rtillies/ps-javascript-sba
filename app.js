@@ -112,7 +112,7 @@ function getLearnerData(course, ag, submissions) {
         gradeObject.id = assign.id
         gradeObject.points = score
         gradeObject.max = assign.points_possible
-        gradeObject.grade = score / assign.points_possible
+        gradeObject.grade = Number((score / assign.points_possible).toFixed(3))
         foundLearner[assign.id] = gradeObject
   
         break
@@ -142,7 +142,7 @@ function calcAverage(learner) {
       maxTotal += learner[key].max
       learner[key] = learner[key].grade
     }
-    let average = pointTotal / maxTotal;
+    let average = Number((pointTotal / maxTotal).toFixed(3));
     // console.log("Average", learner.id, pointTotal, maxTotal, average);
 
     learner.avg = average;
