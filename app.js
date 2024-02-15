@@ -87,13 +87,18 @@ function getLearnerData(course, ag, submissions) {
     // const assignID = sub.assignment_id
     // const lScore = sub.submission.score
     // let maxScore, grade, learnerID, assignID;
-    let grade, learnerID, assignID;
+    let score, grade, learnerID, assignID;
 
     for (const assign of allAssignments) {
       // console.log(assign);
       // console.log(`Assign ID: ${assign.id}`);
       if (assign.id == sub.assignment_id) {
-        grade = sub.submission.score / assign.points_possible
+        const lateSub = sub.submission.submitted_at > assign.due_at
+        score = lateSub 
+          ? sub.submission.score - assign.points_possible / 10
+          : sub.submission.score
+
+        grade = score / assign.points_possible
 
         const foundLearner = result.find((learner) => {
           return learner.id === sub.learner_id
@@ -105,9 +110,9 @@ function getLearnerData(course, ag, submissions) {
 
         let gradeObject = {}
         gradeObject.id = assign.id
-        gradeObject.points = sub.submission.score
+        gradeObject.points = score
         gradeObject.max = assign.points_possible
-        gradeObject.grade = grade
+        gradeObject.grade = score / assign.points_possible
         foundLearner[assign.id] = gradeObject
   
         break
