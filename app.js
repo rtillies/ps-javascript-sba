@@ -76,8 +76,14 @@ const LearnerSubmissions = [
   }
 ];
 
-// Main function that does all the work
-// Wasn't sure if we were supposed to keep this declaration as is
+/**
+ * Main function that does all the work
+ * Wasn't sure if we were supposed to keep this declaration as is
+ * @param {object} course: info about the course
+ * @param {object} ag: info about the assignments in a course
+ * @param {[object]} submissions: array of learner submissions
+ * @returns array of learners and grade summaries
+ */
 function getLearnerData(course, ag, submissions) {
   let allAssignments = createAssignmentList(course, ag)
   let learnIDlist = createLearnerList(submissions)
@@ -127,30 +133,39 @@ function getLearnerData(course, ag, submissions) {
     }
   })
   
+  // Loop through each learner and call calcAverage function
   for(const learner of result) {
     console.log("Ready to calc average");
     // console.log(learner);
     calcAverage(learner)
   }
-  return result
+
+  return result // this is the final output
 }
 
+/**
+ * Calcuate average grade for an individual learner
+ * @param {object} learner : learner object with id and grade info
+ */
 function calcAverage(learner) {
   let pointTotal = 0
   let maxTotal = 0
 
+  // iterate through objects within the learner object
+  // add up total score and total possible points
+  // replace the "grade object" with just the grade for the individual assignment
   Object.keys(learner).forEach(key => {
-    if (key == "id") {
-      console.log("SKIP ID");
-    } else {
-      console.log("Key", key, learner[key]);
+    // skip the id key
+    if (key !== "id") {
       pointTotal += learner[key].points
       maxTotal += learner[key].max
       learner[key] = learner[key].grade
     }
-    let average = Number((pointTotal / maxTotal).toFixed(3));
-    // console.log("Average", learner.id, pointTotal, maxTotal, average);
 
+    // calculate weighted average to 3 decimal places
+    let average = Number((pointTotal / maxTotal).toFixed(3));
+
+    // attach average to learner object
     learner.avg = average;
   });
 }
