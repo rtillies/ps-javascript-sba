@@ -170,7 +170,12 @@ function calcAverage(learner) {
   });
 }
 
-function createLearnerObjectList(learners, assignments) {
+/**
+ * Create array of Learner objects
+ * @param {[number]} learners : array of learner ids
+ * @returns array of learner objects with id key
+ */
+function createLearnerObjectList(learners) {
   const objectList = []
 
   for (let i = 0; i < learners.length; i++) {
@@ -184,9 +189,14 @@ function createLearnerObjectList(learners, assignments) {
   return objectList
 }
 
-function createLearnerList(ls) {
+/**
+ * Create an array of learner id numbers
+ * @param {*} subs : Array of submission objects
+ * @returns array of learner id numbers
+ */
+function createLearnerList(subs) {
   const learnerList = []
-  ls.forEach(learner => {
+  subs.forEach(learner => {
     let id = learner.learner_id
     if(!learnerList.includes(id))
       learnerList.push(id)
@@ -194,10 +204,18 @@ function createLearnerList(ls) {
   return learnerList
 }
 
+/**
+ * Create an array of assignments that have been due
+ * @param {object} c : course info 
+ * @param {object} ag : group of assignments
+ * @returns array of assignment objects
+ */
 function createAssignmentList(c, ag) {
   const assignList = []
   const today = new Date().toJSON();
 
+  // Error if course ids do not match
+  // Push assignment into array if due date has passed
   if (ag.course_id !== c.id) {
     console.log("Assignment Group does not belong to Course");
   } else {
@@ -208,8 +226,6 @@ function createAssignmentList(c, ag) {
     })
   }
 
-  console.log("Assignment List:");
-  console.log(assignList);
   return assignList
 }
 
