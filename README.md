@@ -1,7 +1,32 @@
 # SBA 308: JavaScript Fundamentals
 
 * **Name**: Richard Tillies
-* **Date**: February 15, 2024
+* **Date**: February 19, 2024
+
+## Description
+This JavaScript application gathers and processes data for a course (including assignments, learners, submissions, and scores). The application processes the data and outputs an array of objects. For example, for a given data set, the application returns output as follows:
+```javascript
+{
+  id: 125,
+  avg: 0.985, // (47 + 150) / (50 + 150)
+  1: 0.94, // 47 / 50
+  2: 1.0 // 150 / 150
+},
+{
+  id: 132,
+  avg: 0.82, // (39 + 125) / (50 + 150)
+  1: 0.78, // 39 / 50
+  2: 0.833 // late: (140 - 15) / 150
+}
+```
+
+## How to run in Chrome browser
+
+1. Clone repo to local machine
+1. Open `index.html` in browser
+1. Right-click and choose **Inspect** to open developer tools
+1. Choose **Console** tab in Dev Tools
+1. Expand section under **Final Results** to view output
 
 ## Requirements
 
