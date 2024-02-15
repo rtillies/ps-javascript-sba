@@ -19,3 +19,10 @@ function getLearnerData(course, ag, submissions) {
   return result;
 }
  */
+
+/* Final Results
+[
+  { '1': 0.94, '2': 1, id: 125, avg: 0.985 },
+  { '1': 0.78, '2': 0.833, id: 132, avg: 0.82 }
+]
+ */
