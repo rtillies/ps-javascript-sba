@@ -5,20 +5,20 @@
 
 ## Description
 This JavaScript application gathers and processes data for a course (including assignments, learners, submissions, and scores). The application processes the data and outputs an array of objects. For example, for a given data set, the application returns output as follows:
+
 ```javascript
 {
-  id: 125,
-  avg: 0.985, // (47 + 150) / (50 + 150)
-  1: 0.94, // 47 / 50
-  2: 1.0 // 150 / 150
+  id: 125, avg: 0.985, 1: 0.94, 2: 1.0
 },
 {
-  id: 132,
-  avg: 0.82, // (39 + 125) / (50 + 150)
-  1: 0.78, // 39 / 50
-  2: 0.833 // late: (140 - 15) / 150
+  id: 132, avg: 0.82, 1: 0.78, 2: 0.833
 }
 ```
+
+Each object represents an individual learner.
+* `id`: Learner ID
+* `avg`: weighted average for all assignments
+* `1`, `2`, etc.: individual grades per assignment
 
 ## How to run in Chrome browser
 
