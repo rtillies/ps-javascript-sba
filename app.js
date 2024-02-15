@@ -85,10 +85,9 @@ const LearnerSubmissions = [
  * @returns array of learners and grade summaries
  */
 function getLearnerData(course, ag, submissions) {
-  let allAssignments = createAssignmentList(course, ag)
-  let learnIDlist = createLearnerList(submissions)
-  // let allLearners = createLearnerObjectList(submissions)
-  const result = createLearnerObjectList(learnIDlist, allAssignments)
+  const allAssignments = createAssignmentList(course, ag)
+  const allLearners = createLearnerList(submissions)
+  const result = createLearnerObjectList(allLearners, allAssignments)
 
   // Iterate through each submission
   submissions.forEach((sub) => {
@@ -115,9 +114,9 @@ function getLearnerData(course, ag, submissions) {
           return learner.id === sub.learner_id
         })  
 
-        console.log("Found learner");
-        console.log(foundLearner);
-        console.log(`POST: assignID: ${assign.id} learnerID: ${sub.learner_id} Grade: ${grade}`);
+        // console.log("Found learner");
+        // console.log(foundLearner);
+        // console.log(`POST: assignID: ${assign.id} learnerID: ${sub.learner_id} Grade: ${grade}`);
 
         // Attach a "temporary" grade object to the learner
         // Will be fixed in calcAverage
@@ -135,7 +134,7 @@ function getLearnerData(course, ag, submissions) {
   
   // Loop through each learner and call calcAverage function
   for(const learner of result) {
-    console.log("Ready to calc average");
+    // console.log("Ready to calc average");
     // console.log(learner);
     calcAverage(learner)
   }
@@ -184,8 +183,8 @@ function createLearnerObjectList(learners) {
     objectList.push(learner)
   }
 
-  console.log("Learner List:");
-  console.log(objectList);
+  // console.log("Learner List:");
+  // console.log(objectList);
   return objectList
 }
 
@@ -226,6 +225,8 @@ function createAssignmentList(c, ag) {
     })
   }
 
+  // console.log("Assignment List:");
+  // console.log(assignList);
   return assignList
 }
 
