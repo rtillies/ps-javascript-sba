@@ -99,11 +99,27 @@ function getLearnerData(course, ag, submissions) {
  */
 
 function getLearnerData(course, ag, submissions) {
-  let assignments = createValidAssignmentList(course, ag)
-  let learners = createLearnerList(submissions)
+  let allAssignments = createValidAssignmentList(course, ag)
+  let allLearners = createLearnerList(submissions)
+  const result = createLearnerObjectList(allLearners, allAssignments)
 
-  console.log(assignments)
-  console.log(learners)
+  return result
+}
+
+function createLearnerObjectList(learners, assignments) {
+  const objectList = []
+
+  for (let i = 0; i < learners.length; i++) {
+    const learner = {}
+    learner.id = learners[i]
+    learner.avg = 0
+    for (const assign of assignments) {
+      learner[assign] = 0
+    }
+    objectList.push(learner)
+  }
+
+  return objectList
 }
 
 function createLearnerList(ls) {
@@ -132,9 +148,11 @@ function createValidAssignmentList(c, ag) {
   return assignList
 }
 
+
+
 // Main program
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
-// console.log(result);
+console.log(result);
 
 /* Final Results
 [
