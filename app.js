@@ -93,22 +93,22 @@ function getLearnerData(course, ag, submissions) {
       // console.log(assign);
       // console.log(`Assign ID: ${assign.id}`);
       if (assign.id == sub.assignment_id) {
-        maxScore = assign.points_possible
         grade = sub.submission.score / assign.points_possible
-        learnerID = sub.learner_id
-        assignID = assign.id
+        // maxScore = assign.points_possible
+        // learnerID = sub.learner_id
+        // assignID = assign.id
         
-        console.log("All Learners:");
-        console.log(result);
+        // console.log("All Learners:");
+        // console.log(result);
 
         const foundLearner = result.find((learner) => {
-          return learner.id === learnerID
+          return learner.id === sub.learner_id
         })  
 
         console.log("Found learner");
         console.log(foundLearner);
-        console.log(`POST: assignID: ${assignID} learnerID: ${learnerID} Grade: ${grade}`);
-        foundLearner[assignID] = grade
+        console.log(`POST: assignID: ${assign.id} learnerID: ${sub.learner_id} Grade: ${grade}`);
+        foundLearner[assign.id] = grade
   
         break
       }
