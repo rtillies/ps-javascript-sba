@@ -137,13 +137,13 @@ function calcAverage(learner) {
     if (key == "id") {
       console.log("SKIP ID");
     } else {
-      console.log(key);
-      console.log(learner[key]);
+      console.log("Key", key, learner[key]);
       pointTotal += learner[key].points
       maxTotal += learner[key].max
+      learner[key] = learner[key].grade
     }
     let average = pointTotal / maxTotal;
-    console.log("Average", learner.id, pointTotal, maxTotal, average);
+    // console.log("Average", learner.id, pointTotal, maxTotal, average);
 
     learner.avg = average;
   });
