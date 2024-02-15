@@ -119,13 +119,13 @@ function getLearnerData(course, ag, submissions) {
       }
 
     }
-    for(const learner of result) {
-      console.log("Ready to calc average");
-      // console.log(learner);
-      calcAverage(learner)
-    }
   })
-
+  
+  for(const learner of result) {
+    console.log("Ready to calc average");
+    // console.log(learner);
+    calcAverage(learner)
+  }
   return result
 }
 
@@ -142,8 +142,10 @@ function calcAverage(learner) {
       pointTotal += learner[key].points
       maxTotal += learner[key].max
     }
-    let avg = pointTotal / maxTotal;
-    console.log(learner.id, pointTotal, maxTotal, avg);
+    let average = pointTotal / maxTotal;
+    console.log("Average", learner.id, pointTotal, maxTotal, average);
+
+    learner.avg = average;
   });
 }
 
