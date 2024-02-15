@@ -87,15 +87,18 @@ function getLearnerData(course, ag, submissions) {
     // const lScore = sub.submission.score
     let maxScore;
 
-    for (const assign in allAssignments) {
+    for (const assign of allAssignments) {
+      // console.log(assign);
       // console.log(`Assign ID: ${assign.id}`);
       if (assign.id == sub.assignment_id) {
-        maxScore = ag.assignments.points_possible
-        console.log(`FOUND: assignID: ${assign} subID: ${sub.assignment_id} max: ${ag.assignments.points_possible}`);
+        maxScore = assign.points_possible
+        grade = sub.submission.score / assign.points_possible
+        
+        console.log(`FOUND: assignID: ${assign.id} score: ${sub.submission.score} / ${maxScore} Percent: ${grade}`);
+
         break
       }
     }
-
     // console.log(`Learner ID: ${sub.learner_id}`);
     // console.log(`Assign ID:  ${sub.assignment_id}`);
     // console.log(`Sub Score:  ${sub.submission.score}`);
@@ -110,7 +113,6 @@ function calcGrade(learnerObjs, submissions) {
 
 function createLearnerObjectList(learners, assignments) {
   const objectList = []
-  // console.log(learners);
 
   for (let i = 0; i < learners.length; i++) {
     const learner = {}
