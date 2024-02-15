@@ -94,12 +94,6 @@ function getLearnerData(course, ag, submissions) {
       // console.log(`Assign ID: ${assign.id}`);
       if (assign.id == sub.assignment_id) {
         grade = sub.submission.score / assign.points_possible
-        // maxScore = assign.points_possible
-        // learnerID = sub.learner_id
-        // assignID = assign.id
-        
-        // console.log("All Learners:");
-        // console.log(result);
 
         const foundLearner = result.find((learner) => {
           return learner.id === sub.learner_id
@@ -113,19 +107,39 @@ function getLearnerData(course, ag, submissions) {
         gradeObject.id = assign.id
         gradeObject.points = sub.submission.score
         gradeObject.max = assign.points_possible
+        gradeObject.grade = grade
         foundLearner[assign.id] = gradeObject
   
         break
       }
+
+    }
+    for(const learner of result) {
+      console.log("Ready to calc average");
+      // console.log(learner);
+      calcAverage(learner)
     }
   })
 
   return result
 }
 
-function calcAverage(learners) {
-  let total = 0
+function calcAverage(learner) {
+  let pointTotal = 0
+  let maxTotal = 0
 
+  Object.keys(learner).forEach(key => {
+    if (key == "id") {
+      console.log("SKIP ID");
+    } else {
+      console.log(key);
+      console.log(learner[key]);
+      pointTotal += learner[key].points
+      maxTotal += learner[key].max
+    }
+    let avg = pointTotal / maxTotal;
+    console.log(learner.id, pointTotal, maxTotal, avg);
+  });
 }
 
 function createLearnerObjectList(learners, assignments) {
