@@ -73,14 +73,6 @@ const LearnerSubmissions = [
       submitted_at: "2023-03-07",
       score: 140
     }
-  },
-  {
-    learner_id: 132,
-    assignment_id: 4,
-    submission: {
-      submitted_at: "2023-03-07",
-      score: 140
-    }
   }
 ];
 
@@ -99,12 +91,12 @@ function getLearnerData(course, ag, submissions) {
   const allAssignments = createAssignmentList(course, ag) // valid assignment objects
   const result = createLearnerList(submissions) // valid learner objects
 
-  console.log("All Assignments:");
-  console.log(allAssignments);
-  console.log("All Learners:");
-  console.log(result);
-  console.log("All Submissions:");
-  console.log(submissions);
+  // console.log("All Assignments:");
+  // console.log(allAssignments);
+  // console.log("All Learners:");
+  // console.log(result);
+  // console.log("All Submissions:");
+  // console.log(submissions);
 
   // Iterate through each submission
   submissions.forEach((sub) => {
@@ -155,24 +147,22 @@ function getLearnerData(course, ag, submissions) {
     if (!found) {
       const missingAssign = ag.assignments.find((assign) => {
         return assign.id === sub.assignment_id
-      })  
+      })
+      // console.log(missingAssign);
 
-      if (!missingAssign) {
+      if (!missingAssign) { // not in assignment list
         console.log(`Error: Assignment ${sub.assignment_id} does not exist`);
       }
-      else if (missingAssign.due_at > TODAY) {
-        console.log(`Note: Assignment ${missingAssign.id} is not yet due`);
-      } else {
-        console.log("Error: Unknown assignment error");
+      else if (missingAssign.due_at > TODAY) { // not yet due
+        console.log(`Note to Learner ${sub.learner_id}: Assignment ${missingAssign.id} is not yet due`);
+      } else { // assignment exists but invalid
+        console.log(`Error: Assignment ${missingAssign.id} is invalid`);
       }
-      // console.log(`Error: No matching assignment ID ${assign.id} ${sub.assignment_id}`);
     }
   })
   
   // Loop through each learner and call calcAverage function
   for(const learner of result) {
-    // console.log("Ready to calc average");
-    // console.log(learner);
     calcAverage(learner)
   }
 
@@ -252,7 +242,7 @@ function createAssignmentList(c, ag) {
   } else {
     ag.assignments.forEach((assign) => {
       if (assign.points_possible <= 0) {
-        console.log("Error: Points possible must greater than 0");
+        console.log(`Error: Assignment ${assign.id}, points possible must greater than 0`);
       } else if(assign.due_at < TODAY) {
         assignList.push(assign)
       }
