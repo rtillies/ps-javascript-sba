@@ -202,13 +202,20 @@ function createAssignmentList(c, ag) {
   const assignList = []
   const today = new Date().toJSON();
 
-  // Error if course ids do not match
-  // Push assignment into array if due date has passed
+  // Errors to check:
+  // - course ids do not match
+  // - course group weight <= 0
+  // - assignment possible points <= 0 
+  // Otherwise, push assignment into array if due date has passed
   if (ag.course_id !== c.id) {
-    console.log("Assignment Group does not belong to Course");
+    console.log("Error: Assignment Group does not belong to Course");
+  } else if (ag.group_weight <= 0) {
+    console.log("Error: Assignment Group weight must greater than 0");
   } else {
     ag.assignments.forEach((assign) => {
-      if(assign.due_at < today) {
+      if (assign.points_possible <= 0) {
+        console.log("Error: Points possible must greater than 0");
+      } else if(assign.due_at < today) {
         assignList.push(assign)
       }
     })
