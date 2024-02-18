@@ -88,6 +88,13 @@ function getLearnerData(course, ag, submissions) {
   const allAssignments = createAssignmentList(course, ag) // valid assignment objects
   const result = createLearnerList(submissions) // valid learner objects
 
+  console.log("All Assignments:");
+  console.log(allAssignments);
+  console.log("All Learners:");
+  console.log(result);
+  console.log("All Submissions:");
+  console.log(submissions);
+
   // Iterate through each submission
   submissions.forEach((sub) => {
     let score, grade, learnerID, assignID;
