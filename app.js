@@ -112,8 +112,7 @@ function getLearnerData(course, ag, submissions) {
       if (assign.id == sub.assignment_id) {
         found = true // found a matching assignment
 
-        // Determine if assignment is late
-        // and adjust score accordingly
+        // Determine if assignment is late, adjust score accordingly
         const lateSub = sub.submission.submitted_at > assign.due_at
         score = lateSub 
           ? sub.submission.score - assign.points_possible / 10
@@ -145,12 +144,11 @@ function getLearnerData(course, ag, submissions) {
 
     }
     if (!found) {
-      const missingAssign = ag.assignments.find((assign) => {
-        return assign.id === sub.assignment_id
-      })
-      // console.log(missingAssign);
-
       try {
+        const missingAssign = ag.assignments.find((assign) => {
+          return assign.id === sub.assignment_id
+        })
+
         if (!missingAssign) { // not in assignment list
           throw (`Error: Assignment ${sub.assignment_id} does not exist`);
         }
@@ -202,7 +200,7 @@ function calcAverage(learner) {
 
 /**
  * Create array of Learner objects
- * @param {*} subs : Array of submission objects
+ * @param {[objects]} subs : Array of submission objects
  * @returns array of learner objects with id key
  */
 function createLearnerList(subs) {
