@@ -73,8 +73,19 @@ const LearnerSubmissions = [
       submitted_at: "2023-03-07",
       score: 140
     }
+  },
+  {
+    learner_id: 132,
+    assignment_id: 4,
+    submission: {
+      submitted_at: "2023-03-07",
+      score: 140
+    }
   }
 ];
+
+// Today's date
+const TODAY = new Date().toJSON();
 
 /**
  * Main function that does all the work
@@ -97,13 +108,17 @@ function getLearnerData(course, ag, submissions) {
 
   // Iterate through each submission
   submissions.forEach((sub) => {
-    let score, grade, learnerID, assignID;
-
+    let score, grade // , learnerID, assignID;
+    // console.log(`Sub assign id ${sub.assignment_id}`);
+    
+    let found = false // flag for matching assignment
     // Iterate through assignments array of objects
     for (const assign of allAssignments) {
+      // console.log(`Assign id ${assign.id}`);
 
       // Find the submission that matches the assignment
       if (assign.id == sub.assignment_id) {
+        found = true // found a matching assignment
 
         // Determine if assignment is late
         // and adjust score accordingly
@@ -135,6 +150,22 @@ function getLearnerData(course, ag, submissions) {
   
         break // when assign.id == sub.assignment_id
       }
+
+    }
+    if (!found) {
+      const missingAssign = ag.assignments.find((assign) => {
+        return assign.id === sub.assignment_id
+      })  
+
+      if (!missingAssign) {
+        console.log(`Error: Assignment ${sub.assignment_id} does not exist`);
+      }
+      else if (missingAssign.due_at > TODAY) {
+        console.log(`Note: Assignment ${missingAssign.id} is not yet due`);
+      } else {
+        console.log("Error: Unknown assignment error");
+      }
+      // console.log(`Error: No matching assignment ID ${assign.id} ${sub.assignment_id}`);
     }
   })
   
@@ -207,7 +238,7 @@ function createLearnerList(subs) {
  */
 function createAssignmentList(c, ag) {
   const assignList = []
-  const today = new Date().toJSON();
+  // const today = new Date().toJSON();
 
   // Errors to check:
   // - course ids do not match
@@ -222,7 +253,7 @@ function createAssignmentList(c, ag) {
     ag.assignments.forEach((assign) => {
       if (assign.points_possible <= 0) {
         console.log("Error: Points possible must greater than 0");
-      } else if(assign.due_at < today) {
+      } else if(assign.due_at < TODAY) {
         assignList.push(assign)
       }
     })
