@@ -150,13 +150,17 @@ function getLearnerData(course, ag, submissions) {
       })
       // console.log(missingAssign);
 
-      if (!missingAssign) { // not in assignment list
-        console.log(`Error: Assignment ${sub.assignment_id} does not exist`);
-      }
-      else if (missingAssign.due_at > TODAY) { // not yet due
-        console.log(`Note to Learner ${sub.learner_id}: Assignment ${missingAssign.id} is not yet due`);
-      } else { // assignment exists but invalid
-        console.log(`Error: Assignment ${missingAssign.id} is invalid`);
+      try {
+        if (!missingAssign) { // not in assignment list
+          throw (`Error: Assignment ${sub.assignment_id} does not exist`);
+        }
+        else if (missingAssign.due_at > TODAY) { // not yet due
+          throw (`Note to Learner ${sub.learner_id}: Assignment ${missingAssign.id} is not yet due`);
+        } else { // assignment exists but invalid
+          throw (`Error: Assignment ${missingAssign.id} is invalid`);
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   })
