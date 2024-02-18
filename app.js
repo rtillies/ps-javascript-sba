@@ -85,9 +85,10 @@ const LearnerSubmissions = [
  * @returns array of learners and grade summaries
  */
 function getLearnerData(course, ag, submissions) {
-  const allAssignments = createAssignmentList(course, ag)
-  const allLearners = createLearnerList(submissions)
-  const result = createLearnerObjectList(allLearners, allAssignments)
+  const allAssignments = createAssignmentList(course, ag) // valid assignment objects
+  const result = createLearnerList(submissions) // valid learner objects, was just id array
+  // const allLearners = createLearnerList(submissions) // valid learner objects, was just id array
+  // const result = createLearnerObjectList(allLearners)
 
   // Iterate through each submission
   submissions.forEach((sub) => {
@@ -174,32 +175,41 @@ function calcAverage(learner) {
  * @param {[number]} learners : array of learner ids
  * @returns array of learner objects with id key
  */
-function createLearnerObjectList(learners) {
-  const objectList = []
+// function createLearnerObjectList(learners) {
+//   const objectList = []
 
-  for (let i = 0; i < learners.length; i++) {
-    const learner = {}
-    learner.id = learners[i]
-    objectList.push(learner)
-  }
+//   for (let i = 0; i < learners.length; i++) {
+//     const learner = {}
+//     learner.id = learners[i]
+//     objectList.push(learner)
+//   }
 
-  // console.log("Learner List:");
-  // console.log(objectList);
-  return objectList
-}
+//   console.log("Learner List:");
+//   console.log(objectList);
+//   return objectList
+// }
 
 /**
- * Create an array of learner id numbers
+ * Create array of Learner objects
  * @param {*} subs : Array of submission objects
- * @returns array of learner id numbers
+ * @returns array of learner objects with id key
  */
 function createLearnerList(subs) {
   const learnerList = []
+  const idList = []
+
   subs.forEach(learner => {
     let id = learner.learner_id
-    if(!learnerList.includes(id))
-      learnerList.push(id)
+    if(!idList.includes(id)) {
+      idList.push(id)
+      const learner = {}
+      learner.id = id
+      learnerList.push(learner)
+    }
   })
+
+  // console.log(learnerList);
+  // return idList
   return learnerList
 }
 
