@@ -86,9 +86,7 @@ const LearnerSubmissions = [
  */
 function getLearnerData(course, ag, submissions) {
   const allAssignments = createAssignmentList(course, ag) // valid assignment objects
-  const result = createLearnerList(submissions) // valid learner objects, was just id array
-  // const allLearners = createLearnerList(submissions) // valid learner objects, was just id array
-  // const result = createLearnerObjectList(allLearners)
+  const result = createLearnerList(submissions) // valid learner objects
 
   // Iterate through each submission
   submissions.forEach((sub) => {
@@ -169,25 +167,6 @@ function calcAverage(learner) {
     learner.avg = average;
   });
 }
-
-/**
- * Create array of Learner objects
- * @param {[number]} learners : array of learner ids
- * @returns array of learner objects with id key
- */
-// function createLearnerObjectList(learners) {
-//   const objectList = []
-
-//   for (let i = 0; i < learners.length; i++) {
-//     const learner = {}
-//     learner.id = learners[i]
-//     objectList.push(learner)
-//   }
-
-//   console.log("Learner List:");
-//   console.log(objectList);
-//   return objectList
-// }
 
 /**
  * Create array of Learner objects
