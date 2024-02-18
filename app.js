@@ -91,22 +91,13 @@ function getLearnerData(course, ag, submissions) {
   const allAssignments = createAssignmentList(course, ag) // valid assignment objects
   const result = createLearnerList(submissions) // valid learner objects
 
-  // console.log("All Assignments:");
-  // console.log(allAssignments);
-  // console.log("All Learners:");
-  // console.log(result);
-  // console.log("All Submissions:");
-  // console.log(submissions);
-
   // Iterate through each submission
   submissions.forEach((sub) => {
-    let score, grade // , learnerID, assignID;
-    // console.log(`Sub assign id ${sub.assignment_id}`);
-    
+    let score, grade //
     let found = false // flag for matching assignment
+
     // Iterate through assignments array of objects
     for (const assign of allAssignments) {
-      // console.log(`Assign id ${assign.id}`);
 
       // Find the submission that matches the assignment
       if (assign.id == sub.assignment_id) {
@@ -126,10 +117,6 @@ function getLearnerData(course, ag, submissions) {
           return learner.id === sub.learner_id
         })  
 
-        // console.log("Found learner");
-        // console.log(foundLearner);
-        // console.log(`POST: assignID: ${assign.id} learnerID: ${sub.learner_id} Grade: ${grade}`);
-
         // Attach a "temporary" grade object to the learner
         // Will be fixed in calcAverage
         let gradeObject = {}
@@ -141,8 +128,8 @@ function getLearnerData(course, ag, submissions) {
   
         break // when assign.id == sub.assignment_id
       }
-
     }
+
     if (!found) {
       try {
         const missingAssign = ag.assignments.find((assign) => {
@@ -200,7 +187,7 @@ function calcAverage(learner) {
 
 /**
  * Create array of Learner objects
- * @param {[objects]} subs : Array of submission objects
+ * @param {[object]} subs : Array of submission objects
  * @returns array of learner objects with id key
  */
 function createLearnerList(subs) {
@@ -217,8 +204,7 @@ function createLearnerList(subs) {
     }
   })
 
-  // console.log(learnerList);
-  // return idList
+  // return list of learner objects
   return learnerList
 }
 
@@ -251,8 +237,7 @@ function createAssignmentList(c, ag) {
     })
   }
 
-  // console.log("Assignment List:");
-  // console.log(assignList);
+  // return list of assignment objects
   return assignList
 }
 
